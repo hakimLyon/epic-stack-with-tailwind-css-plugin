@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss'
 import defaultTheme from 'tailwindcss/defaultTheme.js'
 import animatePlugin from 'tailwindcss-animate'
 import radixPlugin from 'tailwindcss-radix'
+import plugin from 'tailwindcss/plugin.js'
 
 export default {
 	content: ['./app/**/*.{ts,tsx,jsx,js}'],
@@ -120,5 +121,29 @@ export default {
 			},
 		},
 	},
-	plugins: [animatePlugin, radixPlugin],
+	plugins: [
+		animatePlugin,
+		radixPlugin,
+		plugin(({ theme, addUtilities }) => {
+			const epicUtilities: { [key: string]: any } = {}
+			const colors = theme('colors')
+			for (const color in colors) {
+				if (typeof colors[color] === 'object') {
+					const color1 = colors[color]['500']
+					const color2 = colors[color]['700']
+					epicUtilities[`.epic-shadow-${color}`] = {
+						boxShadow: `0 0 5px ${color1}, 0 0 15px ${color2}`,
+						border: '0px solid transparent',
+						padding: 2,
+						borderRadius: `calc(var(--radius) - 2px)`,
+						transition: 'background-color 0.5s ease',
+						// Add additional styles here
+					}
+				}
+			}
+			//epicUtilities['.epic-custom-utility'] = {}
+			// Add your custom styles here
+			addUtilities(epicUtilities)
+		}),
+	],
 } satisfies Config

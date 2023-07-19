@@ -63,7 +63,7 @@ export default function Index() {
 									<TooltipTrigger asChild>
 										<a
 											href={img.href}
-											className="flex h-16 w-32 justify-center p-1 grayscale transition hover:grayscale-0 focus:grayscale-0"
+											className="flex h-16 w-32 justify-center p-1 grayscale transition hover:grayscale-0 hover:epic-shadow-blue focus:grayscale-0"
 										>
 											<img
 												alt={img.alt}
